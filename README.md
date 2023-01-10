@@ -9,7 +9,7 @@ Webassembly is an approach of choice when speed  is required in web page script 
 
 The aim of this project is to implement a C version of the well known Moog low pass Ladder filter as a webAudio audioWorkletNode. Such a digital filter is CPU intensive so a wasm module is a great candidate. Interface between javascript and the native inner function will be as thin as possible.
 # Architecture
-![Architecture](doc/images/architecture.png)
+![Architecture](/assets/images/architecture.png)
 
 # Compile C to wasm Bytecode
 Compiles C source file to wasm module. No needs for emscripten js glue to keep things as small and simple as posible.
@@ -106,7 +106,7 @@ this.port.onmessage = (e) => {
 - outputBufferPtr: ƒ $outputBufferPtr()     -> return buffer ptr function
 - ...
 ```
-![Architecture](doc/images/memory.png)
+![Architecture](/assets/images/memory.png)
 # Finally the process loop
 1. copy webAudio samples buffer to local memory
 2. process samples (ie. audio filter)
@@ -155,4 +155,4 @@ EMSCRIPTEN_KEEPALIVE
         resonance = r;
     }
 ```
-![Architecture](type/images/parameter.png)
+![Architecture](/assets/images/parameter.png)
