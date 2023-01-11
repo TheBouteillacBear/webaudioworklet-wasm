@@ -1,13 +1,14 @@
-# webaudioworklet
-
-
 # <span style="color: #FF8000"> A Moog ladder filter audioWorkletNode implementation with Webassembly
-
  
 # Preamble
 Webassembly is an approach of choice when speed  is required in web page script processing. The audioWorklet inner loop requiries speed for a fast processing of the continuous sample batches flowing through webAudio AudioNode chain.
 
 The aim of this project is to implement a C version of the well known Moog low pass Ladder filter as a webAudio audioWorkletNode. Such a digital filter is CPU intensive so a wasm module is a great candidate. Interface between javascript and the native inner function will be as thin as possible.
+### implemetation :
+* /src/minimal : barebone osc + nop filter + speaker
+* /src/ladder  : moog ladder audioWorktetNode osc + lader filter + speaker
+* /src/demo    : add resonance & offset tunable parameters through sliders + oscilloscope for visualization
+
 # Architecture
 <img src="/assets/images/globalFlow.png" width="50%" height="50%">
 
