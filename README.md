@@ -8,6 +8,8 @@ The aim of this project is to implement a C version of the well known Moog low p
 * /src/minimal : barebone osc + nop filter + speaker
 * /src/ladder  : moog ladder audioWorktetNode osc + lader filter + speaker
 * /src/demo    : add resonance & offset tunable parameters through sliders + oscilloscope for visualization
+Thanks to [ddiakopoulos/MoogLadders](https://github.com/ddiakopoulos/MoogLadders) for it great study of existing moog filters.
+The microtracker one works well for me.
 
 # Architecture
 <img src="/assets/images/globalFlow.png" width="50%" height="50%">
