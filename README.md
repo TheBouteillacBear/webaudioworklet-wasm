@@ -106,7 +106,7 @@ this.port.onmessage = (e) => {
 - outputBufferPtr: ƒ $outputBufferPtr()     -> return buffer ptr function
 - ...
 ```
-<img src="/assets/images/memory.png" width="50%" height="50%">
+<img src="/assets/images/memory.png" width="70%" height="70%">
 # Finally the process loop
 1. copy webAudio samples buffer to local memory
 2. process samples (ie. audio filter)
