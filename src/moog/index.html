@@ -1,0 +1,78 @@
+<html>
+<head>
+<script>
+    var audioCtx;
+    var oscillatorNode, minWorkletNode;
+    window.onload = () => {
+        document.getElementById("startBtn")
+            .addEventListener('click', async (evt)=>{
+                if ( evt.target.innerText === "Start" ) {
+                    if ( audioCtx === undefined ) {
+                        audioCtx = new AudioContext();
+                        await configureAudioGraph(audioCtx);
+                        startBtn.textContent = '...';
+                    }
+                    if ( audioCtx.state === "suspended") {
+                        startBtn.textContent = '...';
+                        await audioCtx.resume();
+                        
+                    }                   
+                } else {
+                    audioCtx.suspend();
+                    startBtn.textContent = 'Start';
+                }
+
+            }, false);
+    }
+    configureAudioGraph = async ()=> {
+       
+        oscillatorNode = new OscillatorNode(audioCtx, {
+            frequency: 440,
+            type: "square",
+            channelCount: 1,
+            channelCountMode: "explicit",
+            channelInterpretation: "discrete",
+        })
+        oscillatorNode.start();
+
+        filter1 = new BiquadFilterNode(audioCtx, {
+            frequency: 10000,
+            Q: 3.0,
+            type: "lowpass",
+        })
+        filter2 = new BiquadFilterNode(audioCtx, {
+            frequency: 100,
+            Q: 3.0,
+            type: "highpass",
+        })
+        gainNode = new GainNode(audioCtx, {
+            gain: 1.0,
+        })
+
+        //  Creates a AudioWorkletNode and its associated AudioWorkletProcessor
+        await audioCtx.audioWorklet.addModule('worklet-processor.js');
+        filterWorkletNode = new AudioWorkletNode(audioCtx, 'worklet-processor');
+
+        //  Gets WeAssembly bytcode from file
+        const response = await fetch('filterKernel.wasm');
+        const byteCode = await response.arrayBuffer();
+
+        //  Sends bytecode to the AudioWorkletProcessor for instanciation
+        filterWorkletNode.port.postMessage(byteCode);
+
+        oscillatorNode
+        //.connect(filter1)
+        //.connect(filterWorkletNode)
+        //.connect(filter2)
+        //.connect(gainNode)
+        .connect(audioCtx.destination)
+
+       
+    }
+
+</script>
+</head>
+<body>
+    <button id="startBtn">Start</button>  
+</body>
+</html>
