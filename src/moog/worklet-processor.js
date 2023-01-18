@@ -10,15 +10,17 @@ class WorkletProcessor extends AudioWorkletProcessor {
 
         WebAssembly.instantiate(e.data)
         .then((result) => {
-            this.exports = result.instance.exports;
+            const exports = result.instance.exports;
             
-            this.inputStart   = this.exports.inputBufferPtr();
-            this.outputStart  = this.exports.outputBufferPtr();
+            this.inputStart   = exports.inputBufferPtr();
+            this.outputStart  = exports.outputBufferPtr();
 
             this.inputBuffer  = new Float32Array(exports.memory.buffer, this.inputStart, 128)
             this.outputBuffer = new Float32Array(exports.memory.buffer, this.outputStart, 128)
 
-            this.exports.init();
+            exports.init();
+          
+            this.filterProcess = exports.filterProcess;
         }); 
     };
   }
@@ -26,7 +28,7 @@ class WorkletProcessor extends AudioWorkletProcessor {
   process(inputList, outputList, parameters) {
 
     this.inputBuffer.set(inputList[0][0]);
-    this.exports.filterProcess();
+    filterProcess();
     outputList[0][0].set(this.outputBuffer);
 
     return true;
