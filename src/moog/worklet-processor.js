@@ -20,7 +20,7 @@ class WorkletProcessor extends AudioWorkletProcessor {
 
             exports.init();
           
-            this.filterProcess = exports.filterProcess;
+            this.filter = exports.filter;
         }); 
     };
   }
@@ -28,7 +28,7 @@ class WorkletProcessor extends AudioWorkletProcessor {
   process(inputList, outputList, parameters) {
 
     this.inputBuffer.set(inputList[0][0]);
-    filterProcess();
+    this.filter();
     outputList[0][0].set(this.outputBuffer);
 
     return true;
