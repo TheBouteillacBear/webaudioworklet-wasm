@@ -12,8 +12,8 @@ class WorkletProcessor extends AudioWorkletProcessor {
         .then((result) => {
             this.exports = result.instance.exports;
             
-            this.inputStart   = exports.inputBufferPtr();
-            this.outputStart  = exports.outputBufferPtr();
+            this.inputStart   = this.exports.inputBufferPtr();
+            this.outputStart  = this.exports.outputBufferPtr();
 
             this.inputBuffer  = new Float32Array(exports.memory.buffer, this.inputStart, 128)
             this.outputBuffer = new Float32Array(exports.memory.buffer, this.outputStart, 128)
