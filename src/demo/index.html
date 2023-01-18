@@ -1,0 +1,38 @@
+<html>
+<head>
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+<style>
+    button {
+        width: 80%;
+    }
+    .pannel {
+        display: flex;
+        flex-direction: column;
+        width: 400px;
+        align-items: center;
+    }
+    #oscilloscope {
+        width:  400px;
+        height: 256px;
+        margin: 10px;
+        border: 1px solid black;
+        background-color: darkgreen;
+    }
+</style>
+</head>
+<body>
+    
+    <div class="pannel">
+        <h1>Demo</h1>
+        <button id="startBtn">Start</button>
+        <canvas id="oscilloscope" width="400" height="256"></canvas>
+        <label for="frequency">Frequency</label>
+        <input  id="frequency" type="range" min="200" max="2000" value=300>
+        <label for="cutOff">Cutoff</label>
+        <input  id="cutOff" type="range" min="200" max="5000" value=300>
+        <label for="resonance">Resonance</label>
+        <input  id="resonance" type="range" min="1" max="15" value=10>
+    </div>
+    <script src="./main.js" type="module"></script>
+</body>
+</html>
