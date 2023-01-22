@@ -115,6 +115,7 @@ this.port.onmessage = (e) => {
 ```
 <img src="/assets/images/memory.png" width="70%" height="70%">
 # Finally the process loop
+ 
 1. copy webAudio samples buffer to local memory
 2. process samples (ie. audio filter)
 3. returns processed samples to WebAudio next Node
@@ -132,7 +133,8 @@ this.port.onmessage = (e) => {
     registerProcessor('worklet-processor', WorkletProcessor);
 ```
 # Passing parameters
-Filters needs to be parameterized. Hereafter a transmitting chain between main javascript and inner samples processor loop.
+Filters needs to be parameterized. Hereafter two transmitting chains between main javascript and inner samples processor loop.
+## Calling a C function exported to javascript.
 1. UI sends message to WASMWorkletProcessor
 #### index.html
 ```html
@@ -162,3 +164,6 @@ EMSCRIPTEN_KEEPALIVE
     }
 ```
 ![Architecture](/assets/images/parameter.png)
+ 
+## Using the <em>AudioWorkletNode.parameters</em> interface.
+
