@@ -188,7 +188,9 @@ EMSCRIPTEN_KEEPALIVE
  ```js
  QParam = ladderNode.parameters.get("Q");
  ```
-3. Use the created parameter in the user UI.
+3. Use the created parameter in the UI as a regular WebAudio parameter.
+ ```js
  document.getElementById('resonance').addEventListener('input', (evt) => {
         QParam.value = parseFloat(evt.target.value)/20.0;
         });
+ ```
