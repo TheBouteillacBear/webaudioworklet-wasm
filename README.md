@@ -146,10 +146,12 @@ Filters needs to be parameterized. Hereafter two transmitting chains between mai
 #### worklet-processor.js
 ```js
     ...
+    // a 'shortcut' to the exported C function
     this.setCutoff = exports.setCutoff;
     ...
     this.port.onmessage = (e) => {
         ...
+        // calls the C function to set the value
         this.setCutoff(value);
         ...
     }
@@ -157,6 +159,7 @@ Filters needs to be parameterized. Hereafter two transmitting chains between mai
 3.  Wasm filter process set local variable
 #### filter
 ```cpp
+float cutoff;
 EMSCRIPTEN_KEEPALIVE
     void setCutoff(float c){
         cutoff = c * 2 * _PI / _SAMPLERATE;
