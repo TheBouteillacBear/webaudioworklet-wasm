@@ -136,30 +136,29 @@ Filters needs to be parameterized. Hereafter a transmitting chain between main j
 1. UI sends message to WASMWorkletProcessor
 #### index.html
 ```html
-    document.getElementById('resonance').addEventListener('input', (evt) => {
-        console.log(evt.target.value);
-        filterWorkletNode.port.postMessage({resonance: parseFloat(evt.target.value)})
+    document.getElementById('cutOff').addEventListener('input', (evt) => {
+        ladderNode.port.postMessage({cutOff: evt.target.value})
         });
 ```
 2. WASMWorkletProcessor calls an wasm exported function
 #### worklet-processor.js
 ```js
     ...
-    this.setResonance = exports.setResonance;
+    this.setCutoff = exports.setCutoff;
     ...
     this.port.onmessage = (e) => {
         ...
-        this.setResonance(value);
+        this.setCutoff(value);
         ...
     }
 ```
 3.  Wasm filter process set local variable
 #### filter
 ```cpp
-float resonance;
 EMSCRIPTEN_KEEPALIVE
-    void setResonance(float r) {
-        resonance = r;
+    void setCutoff(float c){
+        cutoff = c * 2 * _PI / _SAMPLERATE;
+        cutoff = (cutoff > 1) ? 1 : cutoff;
     }
 ```
 ![Architecture](/assets/images/parameter.png)
