@@ -134,7 +134,7 @@ this.port.onmessage = (e) => {
 ```
 # Passing parameters
 Filters needs to be parameterized. Hereafter two transmitting chains between main javascript and inner samples processor loop.
-## Calling a C function exported to javascript.
+## 1- Calling a C function exported to javascript.
 1. UI sends message to WASMWorkletProcessor
 #### index.html
 ```html
@@ -165,5 +165,27 @@ EMSCRIPTEN_KEEPALIVE
 ```
 ![Architecture](/assets/images/parameter.png)
  
-## Using the <em>AudioWorkletNode.parameters</em> interface.
+## 2- Using the <em>AudioWorkletNode.parameters</em> interface.
 
+ 1. Declare a parmeter in the audioWorkletProcessor <em>static get parameterDescriptors()</em> function
+ ```js
+ static get parameterDescriptors() {
+        return [
+            {
+            name: "Q",
+            defaultValue: 1.0,
+            minValue: 0.02,
+            maxValue: 2.0,
+            automationRate: "k-rate",
+            },
+        ];
+    }
+ ```
+ 2. Instanciate the parameter in the UI
+ ```js
+ QParam = ladderNode.parameters.get("Q");
+ ```
+3. Use the created parameter in the user UI.
+ document.getElementById('resonance').addEventListener('input', (evt) => {
+        QParam.value = parseFloat(evt.target.value)/20.0;
+        });
