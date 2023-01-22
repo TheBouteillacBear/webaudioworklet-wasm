@@ -78,7 +78,7 @@ EMSCRIPTEN_KEEPALIVE
 1. instantiate the received byteCode, resulting in a module and the first instance of that module.
 2. get pointers to instance memory.
 3. create a javascript shadow buffer pointing to the corresponding instance buffer.
-4. create then innerloop samples process native code function 
+4. create the innerloop samples process as native code function 
 
 #### worklet-processor.js
 ```js
